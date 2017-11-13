@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" fx:controller="controller.SceneMainController"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" 
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" 
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="316.0" layoutX="13.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="574.0" />
+        <Button fx:id="btnsubmit1" onAction="#handleButtonClick1" layoutX="342.0" layoutY="349.0" mnemonicParsing="false" text="Button 3" />
+        <Button fx:id="btnsubmit2" onAction="#handleButtonClick2" layoutX="197.0" layoutY="349.0" mnemonicParsing="false" text="Button 1" />
+        <Button fx:id="btnsubmit3" onAction="#handleButtonClick3" layoutX="269.0" layoutY="349.0" mnemonicParsing="false" text="Button 2" />
+    </children>
+</AnchorPane>

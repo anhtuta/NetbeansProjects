@@ -1,0 +1,3 @@
+Trò chơi caro gồm 2 người chơi lần lượt điền các quân X và O vào các ô trên bàn cờ. Nếu ai tạo được một đường (ngang, dọc, chéo) liên tiếp có 5 quân thì giành chiến thắng. Khi thắng mỗi hiệp thì điểm số của họ được tăng lên và được ghi tại phía trên.
+
+Trò chơi cho phép chọn đi lại, xin thua, chơi hiệp mới hoặc trò chơi mới. Khi chọn hiệp mới thì tỉ số điểm của người chơi vẫn giữ nguyên.

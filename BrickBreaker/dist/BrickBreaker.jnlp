@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="BrickBreaker.jnlp">
+  <information>
+    <title>BrickBreaker</title>
+    <vendor>Oracle</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="BrickBreaker.jar" size="711877" download="eager" />
+  </resources>
+  <applet-desc  width="950" height="700" main-class="com.javafx.main.NoJavaFXFallback"  name="BrickBreaker" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="950" height="700" main-class="brickbreaker.Main"  name="BrickBreaker" />
+  <update check="background"/>
+</jnlp>

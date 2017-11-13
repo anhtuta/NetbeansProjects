@@ -1,0 +1,1 @@
+This folder will store files from users when they send to server, then they can download file in this folder

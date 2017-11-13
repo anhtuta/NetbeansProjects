@@ -1,0 +1,65 @@
+﻿mysql server
+download: mysql connecter java 5.1.39
+
+user: SYSTEM
+pass: 05111995
+
+SELECT * FROM student_2.student2;
+
+update student2 set name = 'picollo', Gioi Tinh ='Nam',Dia chi = 'nhatban', email = 'picollo' where id = '20130004';
+SELECT * FROM student_2.student2;
+
+
+/////////////////////////////////////////
+//insert:
+void insertHH(String th, String dg, String sl) {
+	stmt.executeUpdate("INSERT INTO HangHoa(TenHang,DonGia,Soluong) Values('"+th+"',"+dg+","+sl+")");
+}
+
+//cách khác:
+
+void insertHHPP(String th, String dg, String sl, String ng) { 
+	PreparedStatement pstmt;
+	String sql="INSERT INTO HangHoa(TenHang,DonGia,Soluong,Ngay) Values(?,?,?,?)";
+
+	    pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1, th);
+            pstmt.setString(2,dg);
+            pstmt.setString(3, sl);
+            pstmt.setString(4, ng);
+            pstmt.executeUpdate();
+}
+
+/////////////////////////////////////////
+///nhắc lại 1 số cách truy vấn:
+
+pst = conn.prepareStatement("SELECT * FROM sinhvien ORDER BY name");
+rs = pst.executeQuery(); //rs lấy các bản ghi thỏa mãn
+if(rs.next()) {
+     //do something
+}
+
+
+pst2 = conn.prepareStatement("SELECT * FROM sinhvien WHERE MSSV = " + table.getValueAt(r, 0));
+if(pst2.executeUpdate() > 0) {
+    //do something, vi du: JOptionPane.show...
+}
+
+
+st2 = conn.createStatement();
+rs2 = st2.executeQuery("SELECT * FROM sinhvien WHERE MSSV = " + String.valueOf(table.getValueAt(row, 0)));  //rs2 lấy các bản ghi thỏa mãn
+if(rs2.next()) {
+	//do something
+}
+
+///////////////////////////////////////////////
+
+MySql:
+-Muốn hiển thị (SELECT * FROM...) thì dùng executeQuery()
+-Muốn thêm, sửa, xóa (INSERT, ADD, DELETE ... FROM...) thì dùng executeUpdate()
+2 cái trên có thể dùng với preparesataement hoặc statement
+-sau khi sử dụng phải đóng kết nối: 
+pst.close(); st.close(); conn.close();
+-resultset: dùng hàm executeQuery()
+
+UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

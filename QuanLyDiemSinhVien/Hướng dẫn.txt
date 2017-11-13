@@ -1,0 +1,26 @@
+﻿- đây là hướng dẫn chạy phần mền
+B1: Bạn restore database với File QuanLyDiemSinhVien.bak trong thư mục data
+B2: Bạn đổi tên server tên database trong file DataAccessHelper.java
+B3: kiểm tra cổng 1433 trong máy xem đã run chưa. nếu chưa thì bật lên
+	cách kiểm tra bật cmd và gõ vào: netstat -a -P TCP
+B4: vì ở phần import và export file excel có đường dẫn(file path)
+    nên khi các bạn giải nén thì đồng thời đổi đường dẫn file vào đúng chỉ
+    mục mà các bạn đề folder file excel. Mình đã tạo sẵ 1 folder như thế
+    ở ngay trên folder file giải nén. các bạn có thể dùng ngay :).
+    còn 1 phần nữa là file excel ở đây các bạn phải save as về phiên bản 1993-2000
+
+-- 1 lưu ý nữa là code này mình viết vội trong 1 tuần để nộp cho cô nên rất it coment.
+   Mình thật sự xin lỗi về vấn đề nay :3. Nên các bạn đọc có không hiểu chỗ nào có thể
+   Liên hệ qua FB cho mình. mình sẽ giải đáp hết mọi thắc mắc để bù vào việc không cmt
+   trong thời gian sớm nhất.
+
+Cảm ơn các bạn đã đọc. Phần mềm còn nhiều thiếu sót nên nếu các bạn cứ tự do sáng tạo.
+
+Thank all!.
+
+-------------------------------------------------------------------
+SV: Phạm Anh Tuấn
+Mssv: 1421050690
+Lớp: Công Nghệ Phần Mềm B K59
+Khoa: CNTT
+Trường: Đại Học Mỏ Địa Chất (HUMG)
