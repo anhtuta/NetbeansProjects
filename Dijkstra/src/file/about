@@ -1,0 +1,9 @@
+Chương trình mô phỏng thuật toán Dijkstra thực hiện trong kỳ thực tập cơ sở của sinh viên Nguyễn Văn Quân trường Đại học Công nghệ Thông tin và Truyền thông - Đại học Thái Nguyên. 
+
+Chương trình cho phép người dùng vẽ trực tiếp các điểm và đường đi hoặc dùng 5 bản đồ đã xây dụng sẵn và mô phỏng quá trình tìm đường đi ngắn nhất từ 1 đỉnh tới 1 hoặc mọi đỉnh bằng thuật toán Dijkstra với hình ảnh màu sắc trực quan. 
+
+Ngoài ra phía dưới còn có 1 khung log ghi lại quá trình thực hiện.
+
+Mọi chi tiết thắc mắc góp ý xin gửi Email về địa chỉ: nguyenvanquan7826@gmail.com 
+
+Xin cảm sự quan tâm của các bạn!

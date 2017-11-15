@@ -53,6 +53,17 @@ public class Temp extends JFrame implements Runnable {
         node.drawNode(g);
     }
 
+//    @Override
+//    public void repaint() {
+//        //super.repaint(); //To change body of generated methods, choose Tools | Templates.
+//        Graphics g = this.getGraphics();
+//        removeAll();
+//        validate();
+//        node.drawNode(g);
+//    }
+//    
+    
+
     @Override
     public void run() {
         
@@ -64,6 +75,6 @@ public class Temp extends JFrame implements Runnable {
         int []a = new int[9];
         //a[0]= 1;
         System.out.println(a.length);
-        a[10] = 99;
+        //a[10] = 99;
     }
 }

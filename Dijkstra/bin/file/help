@@ -1,0 +1,18 @@
+Chọn loại đồ thị tại Map Type: Undirected(đồ thị vô hướng)hoặc Directed (đồ thị có hướng).
+
+Chọn cách tạo đồ thị: Draw(Vẽ) hoặc Demo(Có 5 ví dụ có sẵn)
+Chọn điểm bắt đầu, kết thúc bên phải.
+
+Có 2 chế độ chạy là chạy cho ra kết quả ngay và chạy từng bước tương ứng với 2 Button "Run All" và "Run Step".
+
+Có 1 bảng hiển thị ma trận trọng số của đồ thị bên dưới 2 button Run.
+Khung bên phải là phần để vẽ và hiển thị đồ thi với các chế độ chọn: 
+	+Update: cập nhật đồ thị khi có thay đổi hoặc muốn chạy lại
+	+Draw point: Vẽ các điểm
+	+Draw Line: Vẽ đường đi giữa các điểm
+	+Move: Di chuyển các điểm để có được một đồ thị dễ nhìn hơn nếu bạn muốn
+	+New: Tạo đồ thị mới
+
+Dưới cùng là phần nhật ký của quá trình chạy có 2 chức năng là hiển thị đường đi và hiển thị bảng quá trị thực hiện nếu làm bằng tay.
+
+Bạn có thể click chuột phải vào điểm hoặc đường thẳng để thay đổi độ dài đường đi hoặc xóa điểm, xóa đường thẳng.

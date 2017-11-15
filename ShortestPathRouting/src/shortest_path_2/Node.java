@@ -5,13 +5,11 @@
  */
 package shortest_path_2;
 
-import shortest_path.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -39,7 +37,6 @@ public class Node {
         this.panel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                //System.out.println("clicked");
                 int x = me.getX();
                 int y = me.getY();
                 if(x < Node.this.x + 10 && x > Node.this.x - 10 && y < Node.this.y + 10 && y > Node.this.y - 10) {

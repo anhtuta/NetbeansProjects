@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
- *
  * @author AnhTu
  */
 public class Game extends Canvas implements Runnable {

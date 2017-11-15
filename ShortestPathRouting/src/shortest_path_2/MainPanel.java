@@ -5,11 +5,9 @@
  */
 package shortest_path_2;
 
-import shortest_path.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -75,8 +73,8 @@ public final class MainPanel extends JPanel {
     void printA() {
         for (int i = 0; i < nodeQuantites; i++) {
             for (int j = 0; j < nodeQuantites; j++) {
-                if(w[i][j]==0) System.out.print("0");
                 System.out.print(w[i][j] + " ");
+                if(w[i][j] < 10) System.out.print(" ");
             }
             System.out.println();
         }
@@ -141,26 +139,6 @@ public final class MainPanel extends JPanel {
         for (int i = 0; i < k; i++) {
             if(distance(nodes[i], x, y) < DISTANCE) return false;
         }
-        return true;
-    }
-    
-    /**
-     * Đầu vào: Đồ thị G=(V,E), n đỉnh, s = đỉnh nguồn, matrix trọng số = w
-     * Đầu ra: Với mỗi đỉnh v, ta thu đc:
-     *  - d[v] = khoảng cách ngắn nhất từ s -> v
-     *  - p[v] = parent[v] trong ĐĐNN từ s -> v, nghĩa là: s -> a -> b -> ... -> p[v] -> v
-     */
-    public void Dijkstra() {
-        int []d = new int[nodeQuantites];
-        int []p = new int[nodeQuantites];
-        
-        int s = 0;  // source node
-        for (int i = 0; i < nodeQuantites; i++) {
-            d[i] = (w[s][i] > 0 ? w[s][i] : Integer.MAX_VALUE);
-            p[i] = s;
-        }
-        
-        d[s] = 0;
-                
+        return true;    
     }
 }
