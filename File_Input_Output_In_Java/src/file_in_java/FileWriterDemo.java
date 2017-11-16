@@ -61,6 +61,6 @@ public class FileWriterDemo {
             fw.close();
         } catch (IOException ex) {
             Logger.getLogger(FileWriter.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
 }

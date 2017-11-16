@@ -7,75 +7,27 @@ package shortest_path_3;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- *
  * @author AnhTu
  */
 public class Node {
 
-    private int index;
-    String name;
-    public int x, y;   //coordinates
+    private int index;      //Số thứ tự của node
+    String name;    //Tên node, ko quan trọng lắm
+    public int x, y;   //coordinates, tọa độ của node
     private final int RADIUS = 15;
-    //private String neighbors;
-    private int [] neighbors;
-    int [] weights;
-    private JPanel panel;
+    private int [] neighbors;       //các hàng xóm của node
+    int [] weights;     //giá tương ứng với hàng xóm. 
     
-    public Node(int index, int x, int y, JPanel panel) {
+    public Node(int index, int x, int y) {
         this.index = index;
         this.x = x;
         this.y = y;
-        this.panel = panel;
-        
-//        this.panel.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent me) {
-//                //System.out.println("clicked");
-//                int mouseX = me.getX();
-//                int mouseY = me.getY();
-//                
-//                showNodeInfo(mouseX, mouseY);
-//                
-//            }
-//
-//        });
-//        
-//        this.panel.addMouseMotionListener(new MouseMotionAdapter() {
-//            @Override
-//            public void mouseDragged(MouseEvent me) {
-//                int x = me.getX();
-//                int y = me.getY();
-//                if(x < Node.this.x + 10 && x > Node.this.x - 10 && y < Node.this.y + 10 && y > Node.this.y - 10) {
-//                    setX(x);
-//                    setY(y);
-//                    panel.repaint();
-//                    //drawNode(panel.getGraphics());
-//                }
-//            }
-//        });
-//        
     }
 
-    private void showNodeInfo(int mouseX, int mouseY) {
-        if(mouseX < this.x + 10 && mouseX > this.x - 10 && mouseY < this.y + 10 && mouseY > this.y - 10) {
-            System.out.println("x = " + this.x + ", y = " + this.x + "; mouse: x = " + mouseX + ", y = " + mouseY);
-            System.out.println();
-            
-            String neighbors = "";
-            for (int i = 0; i < this.neighbors.length; i++) {
-                neighbors += this.neighbors[i] + " ";
-            }
-            JOptionPane.showMessageDialog(panel, "Node "+index + ", coordinate: (" + this.x + ", " + this.y + ")\n" + "Neighbors: " + neighbors);
-        }
-    }
-    
     public int getRADIUS() {
         return RADIUS;
     }
@@ -136,6 +88,7 @@ public class Node {
         g.setColor(Color.WHITE);
         g.fillOval(x-RADIUS+4, y-RADIUS-4, RADIUS*2, RADIUS*2);
         g.setColor(Color.BLACK);
+        g.drawOval(x-RADIUS+4, y-RADIUS-4, RADIUS*2, RADIUS*2);
         g.setFont(new java.awt.Font("Tahoma", 1, 16));
         g.drawString(index+"", x, y);
     }

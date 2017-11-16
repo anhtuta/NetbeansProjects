@@ -20,16 +20,20 @@ import java.util.logging.Logger;
 public class Dijkstra {
 
     int n;
-    int s, t;
+    private int s, t;
     int[] d;
     int[] p;
     int[] T;
     int[][] w;
     final int INF = 99999999;
-    int []steps;    //Chú ý rằng: nếu có n node thì chỉ cần n step là duyệt xong
+    int []steps;    //steps là thứ tự duyệt node (ko tính node nguồn). Chú ý rằng: nếu có n node thì chỉ cần n step là duyệt xong
 
     public Dijkstra() {}
 
+    public void setSourceNode(int source) {
+        this.s = source;
+    }
+    
     public Dijkstra(int n, int s, int t, int[][] w) {
         this.n = n;
         this.s = s;
