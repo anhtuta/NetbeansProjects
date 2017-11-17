@@ -9,7 +9,9 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,22 +20,20 @@ import java.util.logging.Logger;
  * @author AnhTu
  */
 public class Dijkstra {
+    //Giả sử đồ thị G = {V,E}
+    public int n;      // quantity of node
+    private int s, t;   //source node and destination node
+    private int[] d;    //d[k] = shortest path's cost from sourceNode to node-k
+    private int[] p;    //p[k] = parent of k on the shortest path
+    private Set<Integer> T; //Dùng cái này để lưu tập các node để sử dụng trong thuật toán. Ban đầu T = V, sau mỗi bước T = T\{u}. Khi T rỗng thì xong thuật toán!
+    private int[][] w;  //ma trận trọng số của đồ thị
+    public int []steps;    //steps là thứ tự duyệt node (ko tính node nguồn). Chú ý rằng: nếu có n node thì chỉ cần n step là duyệt xong
 
-    int n;
-    private int s, t;
-    int[] d;
-    int[] p;
-    int[] T;
-    int[][] w;
-    final int INF = 99999999;
-    int []steps;    //steps là thứ tự duyệt node (ko tính node nguồn). Chú ý rằng: nếu có n node thì chỉ cần n step là duyệt xong
-
+    public static final int INF = 99999999;
+    String [] names = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"};    //có thể dùng tên để hiển thị node thay cho index
+    
     public Dijkstra() {}
 
-    public void setSourceNode(int source) {
-        this.s = source;
-    }
-    
     public Dijkstra(int n, int s, int t, int[][] w) {
         this.n = n;
         this.s = s;
@@ -42,37 +42,46 @@ public class Dijkstra {
         
         d = new int[n+1];
         p = new int[n+1];
-        T = new int[n+1];
+        T = new HashSet<>();
         steps = new int[n];
         
-        // khởi tạo
         init();
     }
+
+    public int[] getP() {
+        return p;
+    }
     
+    public int[] getD() {
+        return d;
+    }
+    
+    public void setSourceNode(int source) {
+        this.s = source;
+    }
+    
+    public void setDestNode(int dest) {
+        this.t = dest;
+    }
+    
+    
+    // khởi tạo
     private void init() {
-        // khởi tạo
+        System.out.println("init dijkstra: s = " + s + ", t = " + t);
         for (int u = 1; u <= n; u++) {
             if (u == s) {
-                T[u] = -1;	// T = V\{s}, trong ddos V laf taapj cacs ddinhr cuar ddoof thij: G = {V,E}
+                //T[u] = -1;	// T = V\{s}, trong ddos V laf taapj cacs ddinhr cuar ddoof thij: G = {V,E}
                 d[s] = 0;
                 p[u] = s;
                 continue;
             }
 
             d[u] = (w[s][u] > 0 ? w[s][u] : INF);
+            System.out.println("\td[" + u + "] = " + d[u]);
             p[u] = s;
-
-            T[u] = u;	//ban dau mang T se chua cac dinh cua do thi, do do T = {1,2,3,...,n}. Chu y: bat dau mang la chi so 1, nen ta se bo thang T[0]
+            T.add(u);
+            //T[u] = u;	//ban dau mang T se chua cac dinh cua do thi, do do T = {1,2,3,...,n}. Chu y: bat dau mang la chi so 1, nen ta se bo thang T[0]
         }
-    }
-    
-    public boolean isEmpty() {
-        for (int u = 1; u <= n; u++) {
-            if (T[u] > 0) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public void input(String filePath) {
@@ -87,7 +96,7 @@ public class Dijkstra {
             
             d = new int[n+1];
             p = new int[n+1];
-            T = new int[n+1];
+            T = new HashSet<>();
             steps = new int[n];
             w = new int[n+1][n+1];
             
@@ -106,12 +115,10 @@ public class Dijkstra {
             Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        // khởi tạo
         init();
     }
     
     public void output() {
-        
         System.out.println("n = " + n);
         System.out.println("s = " + s);
         System.out.println("t = " + t);
@@ -132,41 +139,35 @@ public class Dijkstra {
             System.out.println("p[" + i + "] = " + p[i]);
 	}
 	
-	for(int i = 1; i <= n; i++) {
-            System.out.println("T[" + i + "] = " + T[i]);
-	}
-        
         System.out.println("Steps = ");
         for(int i = 1; i < n; i++) {
             System.out.print(steps[i] + " ");
 	}
+        System.out.println();
     }
     
     public void dijsktra() {
         int step = 1;
-        while(!isEmpty()) { //lawpj cho towis khi mangr T roongx
+        while(!T.isEmpty()) { //lawpj cho towis khi mangr T roongx
             // Laays ddinhr u laf ddinhr trong T maf d[u] laf nhor nhaats. CHU Y: u phair laf ddinhr trong T
+            System.out.println(T.size());
             int u = 0;
             int min = INF;
-            for (int i = 1; i <= n; i++) {
-                if (i == s) {
-                    continue;
-                }
-                if (T[i] == -1) {
-                    continue;	// Chir xets ddinhr u thuoocj taapj T
-                }
-                //cout << "\td[" << i << "] = "<<d[i]<<endl;
+            //for (int i = 1; i <= n; i++) {
+            for(Integer i : T) {
                 if (d[i] < min) {
-                    u = T[i];
+                    u = i;
                     min = d[i];
                 }
             }
-
-            T[u] = -1; // T = T\{u}: Do ddax timf dc dduwowngf ddi ngawns nhaats twf s towis u neen ta ko xets u nwax!
-            steps[step] = u;
+            
+            //Do đã tìm đc đường ngắn nhất tới u nên ta loại nó khỏi T
+            T.remove(u);
+            steps[step] = u;    //lưu lại bước này duyệt node u
             step++;
+            if(u == t) break;  //Duyệt tới node đích rồi thì dừng lại luôn
 
-            // laays cacs ddinhr v keef voiws ddinhr u
+            // Lấy các đỉnh v kề với đỉnh u để cập nhập đường đi từ nguồn tới v, và cập nhập p[v]
             for (int v = 1; v <= n; v++) {
                 if (v == s) {
                     continue;
@@ -175,11 +176,9 @@ public class Dijkstra {
                     if (d[v] > d[u] + w[u][v]) {
                         d[v] = d[u] + w[u][v];
                         p[v] = u;
-                        //cout << "\tdv = "<<d[v]<<endl;
                     }
                 }
             }
-            
         }
         output();
     }

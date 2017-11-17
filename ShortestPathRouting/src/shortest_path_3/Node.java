@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 public class Node {
 
     private int index;      //Số thứ tự của node
-    String name;    //Tên node, ko quan trọng lắm
     public int x, y;   //coordinates, tọa độ của node
     private final int RADIUS = 15;
     private int [] neighbors;       //các hàng xóm của node
@@ -75,20 +74,12 @@ public class Node {
     public void setWeights(int[] weights) {
         this.weights = weights;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
     
     public void drawNode(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillOval(x-RADIUS+4, y-RADIUS-4, RADIUS*2, RADIUS*2);
+        
         g.setColor(Color.BLACK);
-        g.drawOval(x-RADIUS+4, y-RADIUS-4, RADIUS*2, RADIUS*2);
         g.setFont(new java.awt.Font("Tahoma", 1, 16));
         g.drawString(index+"", x, y);
     }

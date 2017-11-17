@@ -35,12 +35,13 @@ import javax.swing.border.LineBorder;
  */
 public final class GraphPanel extends JPanel {
     Node []nodes;       //chỉ số bắt đầu = 1
-    int nodeQuantites;
+    int nodeQuantity;
     static final int DISTANCE = 70;
-    int [][]w;      //w là matrix chứa giá của đồ thị, chỉ số bắt đầu = 1,1
-    String [] names = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"};
+    int [][]w;      //w là ma trận trọng số của đồ thị, chỉ số bắt đầu = 1,1
     private int s, t;   //source node and destination node
     boolean isRunningStep;
+    static int step = 1;
+    
     Dijkstra ds;
     Traversal ts;
     JTextArea taOut;
@@ -49,18 +50,14 @@ public final class GraphPanel extends JPanel {
         isRunningStep = false;
         this.setSize(400, 400);
         setBorder(new LineBorder(Color.GREEN, 2));
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                //System.out.println("clicked");
                 int mouseX = me.getX();
                 int mouseY = me.getY();
-                
                 showNodeInfo(mouseX, mouseY);
             }
-
         });
         
         this.addMouseMotionListener(new MouseMotionAdapter() {
@@ -68,7 +65,7 @@ public final class GraphPanel extends JPanel {
             public void mouseDragged(MouseEvent me) {
                 int mouseX = me.getX();
                 int mouseY = me.getY();
-                for (int i = 1; i <= nodeQuantites; i++) {
+                for (int i = 1; i <= nodeQuantity; i++) {
                     if(mouseX < nodes[i].x + 10 && mouseX > nodes[i].x - 10 && mouseY < nodes[i].y + 10 && mouseY > nodes[i].y - 10) {
                         nodes[i].x = mouseX;
                         nodes[i].y = mouseY;
@@ -83,8 +80,20 @@ public final class GraphPanel extends JPanel {
         return this.s;
     }
     
+    public void setSourceNode(int s) {
+        this.s = s;
+    }
+    
+    public int getDestNode() {
+        return this.t;
+    }
+    
+    public void setDestNode(int t) {
+        this.t = t;
+    }
+    
     private void showNodeInfo(int mouseX, int mouseY) {
-        for (int i = 1; i <= nodeQuantites; i++) {
+        for (int i = 1; i <= nodeQuantity; i++) {
             if(mouseX < nodes[i].x + 10 && mouseX > nodes[i].x - 10 && mouseY < nodes[i].y + 10 && mouseY > nodes[i].y - 10) {
                 JOptionPane.showMessageDialog(this, "Node "+nodes[i].getIndex() + ", coordinate: (" + nodes[i].getX() + ", " + nodes[i].getY() + ")\n" + "Neighbors: " + nodes[i].getNeighborsName());
             }
@@ -92,24 +101,23 @@ public final class GraphPanel extends JPanel {
     }
     
     public void randomGraph() {
-        nodeQuantites = 15;
-        s = 1; t = nodeQuantites;
-        nodes = new Node[nodeQuantites+1];
-        w = new int[nodeQuantites+1][nodeQuantites+1];
+        nodeQuantity = 15;
+        s = 1; t = nodeQuantity;
+        nodes = new Node[nodeQuantity+1];
+        w = new int[nodeQuantity+1][nodeQuantity+1];
         
         //int currXCoor = 0, currYCoor = 0;
         Random rd = new Random();
-        for (int i = 1; i <= nodeQuantites; i++) {
+        for (int i = 1; i <= nodeQuantity; i++) {
             int x, y, h1, h2, w1, w2;   //x, y là tọa độ nodes[i] đc tạo ngẫu nhiên; h1, h2 là 2 hàng xóm đc tạo ngẫu nhiên; w1, w2 là giá của nodes[i] tới 2 hàng xóm đó
             do {
                 x = rd.nextInt(300)+50;
                 y = rd.nextInt(300)+50;
             } while(!checkNode(i, x, y));
             nodes[i] = new Node(i, x, y);
-            nodes[i].setName(names[i]);
             
-            h1 = rd.nextInt(nodeQuantites) + 1;
-            h2 = rd.nextInt(nodeQuantites) + 1;
+            h1 = rd.nextInt(nodeQuantity) + 1;
+            h2 = rd.nextInt(nodeQuantity) + 1;
             int []neighbors = {h1, h2};
             nodes[i].setNeighbors(neighbors);
             
@@ -136,21 +144,21 @@ public final class GraphPanel extends JPanel {
         }
     }
     
-    public void readGraphFromFile(String filePath) {
+    public boolean readGraphFromFile(String filePath) {
         int flag = 0;
         try {
             FileInputStream fis = new FileInputStream(filePath);
             DataInputStream dis = new DataInputStream(fis);
             
             Scanner sc = new Scanner(dis);
-            nodeQuantites = sc.nextInt();
+            nodeQuantity = sc.nextInt();
             s = sc.nextInt();
             t = sc.nextInt();
             
-            w = new int[nodeQuantites+1][nodeQuantites+1];
+            w = new int[nodeQuantity+1][nodeQuantity+1];
             
-            for (int i = 1; i <= nodeQuantites; i++) {
-                for (int j = 1; j <= nodeQuantites; j++) {
+            for (int i = 1; i <= nodeQuantity; i++) {
+                for (int j = 1; j <= nodeQuantity; j++) {
                     int temp = sc.nextInt();
                     w[i][j] = temp;
                 }
@@ -159,17 +167,16 @@ public final class GraphPanel extends JPanel {
             flag = sc.nextInt();
             if(flag == 1) {
                 // read coordinates
-                nodes = new Node[nodeQuantites+1];
+                nodes = new Node[nodeQuantity+1];
                 int x,y;
-                for (int i = 1; i <= nodeQuantites; i++) {
+                for (int i = 1; i <= nodeQuantity; i++) {
                     x = sc.nextInt();
                     y = sc.nextInt();
                     nodes[i] = new Node(i, x, y);
-                    nodes[i].setName(names[i]);
 
                     // Tạo các hàng xóm của node i từ matrix trọng số w
                     List<Integer> neighborList = new LinkedList<>();
-                    for (int j = 1; j <= nodeQuantites; j++) {
+                    for (int j = 1; j <= nodeQuantity; j++) {
                         if(w[i][j] > 0) neighborList.add(j);
                     }
                     nodes[i].setNeighbors(neighborList.stream().mapToInt(j->j).toArray());
@@ -180,36 +187,38 @@ public final class GraphPanel extends JPanel {
             fis.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } catch (IOException ex) {
             Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         
         if(flag == 0) {
             Random rd = new Random();
-            nodes = new Node[nodeQuantites+1];
-            for (int i = 1; i <= nodeQuantites; i++) {
+            nodes = new Node[nodeQuantity+1];
+            for (int i = 1; i <= nodeQuantity; i++) {
                 int x, y;
                 do {
                     x = rd.nextInt(300)+50;
                     y = rd.nextInt(300)+50;
                 } while(!checkNode(i, x, y));
                 nodes[i] = new Node(i, x, y);
-                nodes[i].setName(names[i]);
 
                 // Tạo các hàng xóm của node i từ matrix trọng số w
                 List<Integer> neighborList = new LinkedList<>();
-                for (int j = 1; j <= nodeQuantites; j++) {
+                for (int j = 1; j <= nodeQuantity; j++) {
                     if(w[i][j] > 0) neighborList.add(j);
                 }
                 nodes[i].setNeighbors(neighborList.stream().mapToInt(j->j).toArray());
-
             }
         }
+        
+        return true;
     }
     
 //    void printWeightMatrix() {
-//        for (int i = 1; i <= nodeQuantites; i++) {
-//            for (int j = 1; j <= nodeQuantites; j++) {
+//        for (int i = 1; i <= nodeQuantity; i++) {
+//            for (int j = 1; j <= nodeQuantity; j++) {
 //                System.out.print(w[i][j] + " ");
 //                if(w[i][j] < 10) System.out.print(" ");
 //            }
@@ -219,11 +228,11 @@ public final class GraphPanel extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g); //To change body of generated methods, choose Tools | Templates.
+        super.paint(g);
         
         // Vẽ các đường nối các node trước
         g.setColor(Color.blue);
-        for (int i = 1; i <= nodeQuantites; i++) {
+        for (int i = 1; i <= nodeQuantity; i++) {
             // Nối nodes[i] với từng hàng xóng của nó
             for (int j = 0; j < nodes[i].getNeighbors().length; j++) {
                 int temp = nodes[i].getNeighbors()[j];
@@ -238,7 +247,7 @@ public final class GraphPanel extends JPanel {
         }
         
         // Vẽ các node
-        for (int i = 1; i <= nodeQuantites; i++) {
+        for (int i = 1; i <= nodeQuantity; i++) {
             nodes[i].drawNode(g);
         }
     }
@@ -249,52 +258,29 @@ public final class GraphPanel extends JPanel {
         g2.setStroke(new BasicStroke(3.0f));
         g2.setFont(new java.awt.Font("Tahoma", 1, 11));
         
-        ds = new Dijkstra(nodeQuantites, s, t, w);
+        ds = new Dijkstra(nodeQuantity, s, t, w);
         ds.dijsktra();
         
-        for (int i = 1; i <= nodeQuantites; i++) {
-            int temp = ds.p[i];
-            
-            // Vẽ đường thằng nối nodes[temp] và nodes[i]
-            if(i != temp) {
-                g2.setColor(Color.RED);
-                g2.drawLine(nodes[i].getX(), nodes[i].getY(), nodes[temp].getX(), nodes[temp].getY());
-                
-                // Vẽ lại giá của các đường đi trên đường đi ngắn nhất
-                g2.setColor(Color.BLACK);
-                g2.drawString(w[i][temp]+"", (nodes[i].getX() + nodes[temp].getX())/2, (nodes[i].getY() + nodes[temp].getY())/2);
-            }
-            
-        }
-        
-        // Vẽ lại các node, để đường đi ko đè lên các node
-        for (int i = 1; i <= nodeQuantites; i++) {
-            nodes[i].drawNode(g2);
-        }
-        
-        // in kq
+        // Vẽ đường đi thăm các node và in kq
         taOut.append("Thứ tự thăm các node\n");
-        for (int i = 1; i < nodeQuantites; i++) {
-            taOut.append(ds.p[ds.steps[i]] + " -> " + ds.steps[i] + "\n");
+        for (int i = 1; i < nodeQuantity; i++) {
+            int u = ds.steps[i];
+            if(u == 0) break;
+            int u_parent = ds.getP()[u];
+            draw2Nodes(g2, u, u_parent);
         }
-        taOut.append("done!\n");
-        
-        taOut.setCaretPosition(taOut.getDocument().getLength());
+
+        doneDijkstra();
     }
-    
-    /*
-    * Chạy giải thuật Dijkstra từng bước
-    */
-    static int step = 1;
+
     public void paintDijkstraSteps() {
-        //Graphics g = this.getGraphics();
         Graphics2D g2 = (Graphics2D) this.getGraphics();
         g2.setFont(new java.awt.Font("Tahoma", 1, 11));
         g2.setStroke(new BasicStroke(3.0f));
         
         if(!isRunningStep) {
             taOut.append("Bắt đầu tìm đường đi ngắn nhất\n");
-            ds = new Dijkstra(nodeQuantites, s, t, w);
+            ds = new Dijkstra(nodeQuantity, s, t, w);
             ds.dijsktra();
             isRunningStep = true;
             taOut.append("Thứ tự thăm các node\n");
@@ -302,31 +288,44 @@ public final class GraphPanel extends JPanel {
         }
         
         int u = ds.steps[step];
-        int u_parent = ds.p[u];
-
-        // Vẽ đường thằng nối nodes[u] và nodes[u_parent]
-        // Ko cần kiểm tra: if(u != u_parent)
+        if(u == 0) {
+            doneDijkstra();
+            return;
+        }
+        
+        int u_parent = ds.getP()[u];
+        draw2Nodes(g2, u, u_parent);
+        step++;
+        if(step == nodeQuantity) {
+            doneDijkstra();
+        }
+        
+    }
+    
+    // vẽ đường thẳng nối từ u_parent tới u
+    private void draw2Nodes(Graphics g2, int u, int u_parent) {
+        g2.setFont(new java.awt.Font("Tahoma", 1, 11));
         g2.setColor(Color.RED);
+        
+        //Vẽ các đường đi
         g2.drawLine(nodes[u].getX(), nodes[u].getY(), nodes[u_parent].getX(), nodes[u_parent].getY());
         
-        // Vẽ lại giá trên đường thẳng trên
+        // Vẽ lại giá
         g2.setColor(Color.BLACK);
         g2.drawString(w[u][u_parent]+"", (nodes[u].getX() + nodes[u_parent].getX())/2, (nodes[u].getY() + nodes[u_parent].getY())/2);
         
         // Vẽ lại các node, để đường đi ko đè lên các node
         g2.setColor(Color.WHITE);
-        for (int i = 1; i <= nodeQuantites; i++) {
-            nodes[i].drawNode(g2);
-        }
-        
+        nodes[u].drawNode(g2);
+        nodes[u_parent].drawNode(g2);
         taOut.append(u_parent + " -> " + u + "\n");
-        step++;
-        if(step == nodeQuantites) {
-            step = 1;
-            isRunningStep = false;
-            taOut.append("done!\n");
-        }
-        
+        taOut.setCaretPosition(taOut.getDocument().getLength());
+    }
+    
+    private void doneDijkstra() {
+        step = 1;
+        isRunningStep = false;
+        taOut.append("done!\n");
         taOut.setCaretPosition(taOut.getDocument().getLength());
     }
 
@@ -343,24 +342,23 @@ public final class GraphPanel extends JPanel {
     }
     
     public void traversalDFS(int sourceNode) {
-        ts = new Traversal(nodeQuantites, s, t, w);
+        ts = new Traversal(nodeQuantity, s, t, w);
         ts.DFS(sourceNode);
         ts.output();
         
         // in kq
         taOut.append("Thứ tự thăm các node\n");
-        for (int i = 1; i <= 2*nodeQuantites; i++) {
+        for (int i = 1; i <= 2*nodeQuantity; i++) {
             taOut.append(ts.steps[i] + "\n");
         }
         taOut.append("done!\n");
-        
         taOut.setCaretPosition(taOut.getDocument().getLength());
     }
     
     public void traversalDFSSteps(int sourceNode) {
         if(!isRunningStep) {    // lần đầu tiên click btTraversalStep thì thiết lập như sau
             taOut.append("Bắt đầu Duyệt DFS\n");
-            ts = new Traversal(nodeQuantites, s, t, w);
+            ts = new Traversal(nodeQuantity, s, t, w);
             ts.DFS(s);
             isRunningStep = true;
             taOut.append("Thứ tự thăm các node\n");
@@ -371,7 +369,7 @@ public final class GraphPanel extends JPanel {
         String str = ts.steps[step];
         taOut.append(str + "\n");
         step++;
-        if(step == 2*nodeQuantites+1) {
+        if(step == 2*nodeQuantity+1) {
             //Đã duyệt tất cả các đỉnh. Chú ý đồ thị này phải liên thông
             step = 1;
             isRunningStep = false;
@@ -381,30 +379,24 @@ public final class GraphPanel extends JPanel {
         taOut.setCaretPosition(taOut.getDocument().getLength());
     }
     
-    public void printNodes() {
-        for (int i = 1; i <= nodeQuantites; i++) {
-            System.out.println("Node " + i + ", Toa do: x = " + nodes[i].getX() + ", y = " + nodes[i].getY());
-            System.out.println("\tNeighbors: " + nodes[i].getNeighborsName());
-        }
-        System.out.println();
-    }
-    
     public void saveGraph(String filePath) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(filePath)); //nếu ko có file này thì nó tự tạo 1 file mới
             // CHÚ Ý: nên lưu = String, nghĩa là dùng hàm bw.write(String str)
             //ghi vào file anhtu.txt:
-            bw.write(nodeQuantites+" "+s+" " +t); bw.newLine(); //nếu thay 2 lệnh này = lệnh bw.write("tạ anh tú\n"); thì phần mềm Notepad ko đọc được ký tự xuống dòng
-            for (int i = 1; i <= nodeQuantites; i++) {
-                for (int j = 1; j <= nodeQuantites; j++) {
+            bw.write(nodeQuantity+" "+s+" " +t); bw.newLine(); //nếu thay 2 lệnh này = lệnh bw.write("tạ anh tú\n"); thì phần mềm Notepad ko đọc được ký tự xuống dòng
+            for (int i = 1; i <= nodeQuantity; i++) {
+                for (int j = 1; j <= nodeQuantity; j++) {
                     bw.write(w[i][j] + " ");
                 }
                 bw.newLine();
             }
             
             // lưu tọa độ các node
-            bw.write("1"); bw.newLine();   //đánh dấu sẽ lưu tọa độ ở các dòng tiếp theo, để lúc đọc file còn biết
-            for (int i = 1; i <= nodeQuantites; i++) {
+            bw.write("1");   //đánh dấu sẽ lưu tọa độ ở các dòng tiếp theo, để lúc đọc file còn biết
+                             //nên dùng write("1") thay vì write(1)
+            bw.newLine();
+            for (int i = 1; i <= nodeQuantity; i++) {
                 bw.write(nodes[i].x + " " + nodes[i].y); bw.newLine();
             }
             

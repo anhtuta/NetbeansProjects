@@ -66,6 +66,20 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator4" max="32767" attributes="0"/>
+                      <Component id="jSeparator3" max="32767" attributes="0"/>
+                      <Component id="jSeparator2" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="btSaveGraph" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btClearOutput" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="txtFilePath" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btOpenGraph" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="btRun" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -79,22 +93,18 @@
                               <Component id="cbDestNode" min="-2" pref="92" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btSaveGraph" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btClearOutput" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btDemoGraph" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btRandomGraph" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btRandomGraph" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="btChooseFile" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="btHelp" min="-2" pref="44" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
                                   <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                   <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
@@ -116,13 +126,21 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btRandomGraph" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btRandomGraph" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btHelp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btChooseFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="txtFilePath" max="32767" attributes="0"/>
+                      <Component id="btOpenGraph" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btDemoGraph" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -134,26 +152,32 @@
                       <Component id="cbSourceNode" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="cbDestNode" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btRun" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="btRunStep" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btTraversal" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="btTraversalStep" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="41" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jSeparator4" min="-2" pref="2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btSaveGraph" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="btClearOutput" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
@@ -174,18 +198,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRandomGraphActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btDemoGraph">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Cambria" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x1ed3; th&#x1ecb; demo"/>
-            <Property name="toolTipText" type="java.lang.String" value="L&#x1ea5;y &#x111;&#x1ed3; th&#x1ecb; c&#xf3; s&#x1eb5;n t&#x1eeb; file"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDemoGraphActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btRun">
@@ -221,7 +233,6 @@
                 <StringItem index="2" value="3"/>
               </StringArray>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbSourceNodeItemStateChanged"/>
@@ -240,7 +251,6 @@
                 <StringItem index="3" value="3"/>
               </StringArray>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbDestNodeItemStateChanged"/>
@@ -260,14 +270,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btClearOutputActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Cambria" size="16" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n &#x111;&#x1ed3; th&#x1ecb;"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -281,7 +283,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Cambria" size="16" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="M&#xf4; ph&#x1ecf;ng"/>
+            <Property name="text" type="java.lang.String" value="M&#xf4; ph&#x1ecf;ng Dijkstra"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
@@ -363,6 +365,52 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btTraversalStepActionPerformed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JButton" name="btOpenGraph">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Cambria" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="M&#x1edf;"/>
+            <Property name="toolTipText" type="java.lang.String" value="L&#x1ea5;y &#x111;&#x1ed3; th&#x1ecb; c&#xf3; s&#x1eb5;n t&#x1eeb; file"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btOpenGraphActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtFilePath">
+        </Component>
+        <Component class="javax.swing.JButton" name="btHelp">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Cambria" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="?"/>
+            <Property name="toolTipText" type="java.lang.String" value="Help"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btHelpActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btChooseFile">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Cambria" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n file"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ch&#x1ecd;n file l&#x1b0;u &#x111;&#x1ed3; th&#x1ecb;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btChooseFileActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator1">
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator2">
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator3">
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator4">
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="graphPanel_App">
@@ -387,7 +435,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="388" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
