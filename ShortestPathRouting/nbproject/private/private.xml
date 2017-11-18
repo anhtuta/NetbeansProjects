@@ -10,7 +10,9 @@
         <group name="NetbeansProjects">
             <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/GraphPanel.java</file>
             <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/Dijkstra.java</file>
+            <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/OpenGraphFrame.java</file>
             <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/App.java</file>
+            <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/MessageWithLink.java</file>
             <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/Node.java</file>
             <file>file:/D:/Documents/NetbeansProjects/ShortestPathRouting/src/shortest_path_3/Traversal.java</file>
         </group>

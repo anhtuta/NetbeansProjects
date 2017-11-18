@@ -100,9 +100,9 @@ public final class GraphPanel extends JPanel {
         }
     }
     
-    public void randomGraph() {
-        nodeQuantity = 15;
-        s = 1; t = nodeQuantity;
+    public void randomGraph(int n, int sourceNode, int destNode) {
+        nodeQuantity = n;
+        s = sourceNode; t = destNode;
         nodes = new Node[nodeQuantity+1];
         w = new int[nodeQuantity+1][nodeQuantity+1];
         
@@ -144,7 +144,7 @@ public final class GraphPanel extends JPanel {
         }
     }
     
-    public boolean readGraphFromFile(String filePath) {
+    public boolean readGraphFromFile(String filePath, OpenGraphFrame ogf) {     //ogf chỉ để show message (Dùng JOptionPane)!
         int flag = 0;
         try {
             FileInputStream fis = new FileInputStream(filePath);
@@ -186,10 +186,19 @@ public final class GraphPanel extends JPanel {
             dis.close();
             fis.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(ogf, "File ko tồn tại!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
         } catch (IOException ex) {
-            Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(ogf, "Không đọc đc file!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+            //Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } catch (java.util.InputMismatchException ex) {
+            //Logger.getLogger(Dijkstra.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(ogf, "File không đúng định dạng!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+            return false;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(ogf, "Unknown error!", "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
@@ -279,6 +288,7 @@ public final class GraphPanel extends JPanel {
         g2.setStroke(new BasicStroke(3.0f));
         
         if(!isRunningStep) {
+            //repaint();   //Để xóa lần chạy trước đi
             taOut.append("Bắt đầu tìm đường đi ngắn nhất\n");
             ds = new Dijkstra(nodeQuantity, s, t, w);
             ds.dijsktra();

@@ -9,9 +9,12 @@ import java.awt.Dimension;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -29,13 +32,13 @@ public class App extends javax.swing.JFrame {
     
     public App() {
         initComponents();
-        this.setTitle("Mô phỏng thuật toán Dijkstra");
+        this.setTitle("SRP Demo");
         gp = new GraphPanel();
         gp.taOut = this.taOutput;
         gp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 153, 255), 3, true));
         gp.setSize(graphPanel_App.getWidth(), graphPanel_App.getHeight());
         graphPanel_App.add(gp);
-        txtFilePath.setMaximumSize(new Dimension(153, 27));
+        //txtFilePath.setMaximumSize(new Dimension(153, 27));
         setEnabledComponents(false);
     }
 
@@ -50,7 +53,6 @@ public class App extends javax.swing.JFrame {
 
         groupTravelGraph = new javax.swing.ButtonGroup();
         optionPanel = new javax.swing.JPanel();
-        btRandomGraph = new javax.swing.JButton();
         btRun = new javax.swing.JButton();
         btRunStep = new javax.swing.JButton();
         cbSourceNode = new javax.swing.JComboBox<>();
@@ -64,34 +66,27 @@ public class App extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         btTraversal = new javax.swing.JButton();
-        btSaveGraph = new javax.swing.JButton();
         btTraversalStep = new javax.swing.JButton();
-        btOpenGraph = new javax.swing.JButton();
-        txtFilePath = new javax.swing.JTextField();
-        btHelp = new javax.swing.JButton();
-        btChooseFile = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        btClearOutput1 = new javax.swing.JButton();
         graphPanel_App = new javax.swing.JPanel();
         outputPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taOutput = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        miRandomGraph = new javax.swing.JMenuItem();
+        miOpenGraph = new javax.swing.JMenuItem();
+        miSaveGraph = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         optionPanel.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 153, 255), 3, true));
-
-        btRandomGraph.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        btRandomGraph.setText("Đồ thị ngẫu nhiên");
-        btRandomGraph.setToolTipText("Tạo 1 đồ thị ngẫu nhiên");
-        btRandomGraph.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRandomGraphActionPerformed(evt);
-            }
-        });
 
         btRun.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         btRun.setText("Chạy");
@@ -134,9 +129,11 @@ public class App extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 153, 255));
         jLabel5.setText("Chọn các node nguồn và đích");
 
         jLabel6.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 153, 255));
         jLabel6.setText("Mô phỏng Dijkstra");
 
         jLabel7.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
@@ -146,6 +143,7 @@ public class App extends javax.swing.JFrame {
         jLabel8.setText("Node đích");
 
         jLabel9.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(51, 153, 255));
         jLabel9.setText("Duyệt đồ thị");
 
         groupTravelGraph.add(jRadioButton1);
@@ -156,6 +154,7 @@ public class App extends javax.swing.JFrame {
         groupTravelGraph.add(jRadioButton2);
         jRadioButton2.setText("BFS");
         jRadioButton2.setToolTipText("Duyệt theo chiều rộng");
+        jRadioButton2.setEnabled(false);
 
         btTraversal.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         btTraversal.setText("Duyệt");
@@ -163,15 +162,6 @@ public class App extends javax.swing.JFrame {
         btTraversal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btTraversalActionPerformed(evt);
-            }
-        });
-
-        btSaveGraph.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        btSaveGraph.setText("Lưu đồ thị");
-        btSaveGraph.setToolTipText("Tìm đường đi ngắn nhất");
-        btSaveGraph.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSaveGraphActionPerformed(evt);
             }
         });
 
@@ -184,30 +174,11 @@ public class App extends javax.swing.JFrame {
             }
         });
 
-        btOpenGraph.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        btOpenGraph.setText("Mở");
-        btOpenGraph.setToolTipText("Lấy đồ thị có sẵn từ file");
-        btOpenGraph.addActionListener(new java.awt.event.ActionListener() {
+        btClearOutput1.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        btClearOutput1.setText("Refresh");
+        btClearOutput1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btOpenGraphActionPerformed(evt);
-            }
-        });
-
-        btHelp.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        btHelp.setText("?");
-        btHelp.setToolTipText("Help");
-        btHelp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btHelpActionPerformed(evt);
-            }
-        });
-
-        btChooseFile.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
-        btChooseFile.setText("Chọn file");
-        btChooseFile.setToolTipText("Chọn file lưu đồ thị");
-        btChooseFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btChooseFileActionPerformed(evt);
+                btClearOutput1ActionPerformed(evt);
             }
         });
 
@@ -221,15 +192,6 @@ public class App extends javax.swing.JFrame {
                     .addComponent(jSeparator4)
                     .addComponent(jSeparator3)
                     .addComponent(jSeparator2)
-                    .addComponent(jSeparator1)
-                    .addGroup(optionPanelLayout.createSequentialGroup()
-                        .addComponent(btSaveGraph)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btClearOutput))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionPanelLayout.createSequentialGroup()
-                        .addComponent(txtFilePath)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btOpenGraph))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, optionPanelLayout.createSequentialGroup()
                         .addComponent(btRun)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -242,11 +204,10 @@ public class App extends javax.swing.JFrame {
                             .addComponent(cbDestNode, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(optionPanelLayout.createSequentialGroup()
                         .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btRandomGraph)
                             .addGroup(optionPanelLayout.createSequentialGroup()
-                                .addComponent(btChooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btClearOutput1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btClearOutput))
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
@@ -266,18 +227,6 @@ public class App extends javax.swing.JFrame {
             optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(optionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btRandomGraph)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btHelp)
-                    .addComponent(btChooseFile))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtFilePath)
-                    .addComponent(btOpenGraph))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -311,8 +260,8 @@ public class App extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btSaveGraph, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btClearOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btClearOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btClearOutput1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -331,7 +280,7 @@ public class App extends javax.swing.JFrame {
         );
         graphPanel_AppLayout.setVerticalGroup(
             graphPanel_AppLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGap(0, 367, Short.MAX_VALUE)
         );
 
         outputPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 102), 3));
@@ -342,6 +291,7 @@ public class App extends javax.swing.JFrame {
         jScrollPane1.setViewportView(taOutput);
 
         jLabel10.setFont(new java.awt.Font("Cambria", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(51, 153, 255));
         jLabel10.setText("Output");
 
         javax.swing.GroupLayout outputPanelLayout = new javax.swing.GroupLayout(outputPanel);
@@ -360,6 +310,52 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jMenu1.setText("File");
+
+        miRandomGraph.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        miRandomGraph.setText("Đồ thị ngẫu nhiên");
+        miRandomGraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miRandomGraphActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miRandomGraph);
+
+        miOpenGraph.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        miOpenGraph.setText("Mở đồ thị");
+        miOpenGraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miOpenGraphActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miOpenGraph);
+
+        miSaveGraph.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        miSaveGraph.setText("Lưu đồ thị");
+        miSaveGraph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSaveGraphActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miSaveGraph);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("About");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("About SPR Demo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -384,37 +380,8 @@ public class App extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btRandomGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRandomGraphActionPerformed
-        gp.randomGraph();
-        gp.repaint();
-        setComboBoxData();
-        setEnabledComponents(true);
-    }//GEN-LAST:event_btRandomGraphActionPerformed
-
-    private void btHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btHelpActionPerformed
-        StringBuilder builder = new StringBuilder("File chứa đồ thị phải có dạng sau\n");
-        builder.append("Dòng thứ nhất chứa 3 số tương ứng với số lượng node n, node nguồn và node đích\n")
-               .append("n dòng tiếp theo chứa ma trận trọng số nxn\n")
-               .append("Sau đó dòng tiếp theo chứa 1 số flag\n")
-               .append("flag = 1 thì n dòng tiếp theo nhập tọa độ của n node\n")
-               .append("flag = 0 thì kết thúc nhập\n")
-               .append("\nVí dụ:\n")
-               .append("5 1 5\n" +
-                    "0 0 22 23 0 \n" +
-                    "0 0 22 13 15 \n" +
-                    "22 22 0 0 29 \n" +
-                    "23 13 0 0 0 \n" +
-                    "0 15 29 0 0 \n" +
-                    "1\n" +
-                    "273 85\n" +
-                    "162 296\n" +
-                    "162 137\n" +
-                    "308 300\n" +
-                    "86 342");
-        JOptionPane.showMessageDialog(this, builder, "Cách tạo file đồ thị", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btHelpActionPerformed
-
     private void btRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRunActionPerformed
+        //gp.repaint();   //Để xóa lần chạy trước đi
         gp.paintDijkstra();
     }//GEN-LAST:event_btRunActionPerformed
 
@@ -455,17 +422,6 @@ public class App extends javax.swing.JFrame {
         gp.traversalDFS(1);
     }//GEN-LAST:event_btTraversalActionPerformed
 
-    private void btSaveGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveGraphActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text file", "txt"));
-        int result = fileChooser.showSaveDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String filePath = String.valueOf(fileChooser.getSelectedFile()); //str là đường dẫn tới file, ví dụ:  C:\Users\AnhTu\Documents\image for java project\bejeweled3.png.  chú ý dấu \ chứ ko phải /
-            if(!filePath.endsWith(".txt")) filePath += ".txt";
-            gp.saveGraph(filePath);
-        }
-    }//GEN-LAST:event_btSaveGraphActionPerformed
-
     private void btTraversalStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTraversalStepActionPerformed
         btRun.setEnabled(false);
         btRunStep.setEnabled(false);
@@ -483,36 +439,43 @@ public class App extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btTraversalStepActionPerformed
 
-    private void btOpenGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOpenGraphActionPerformed
-        String filePath = txtFilePath.getText();
-        if(filePath.equals("")) {
-            JOptionPane.showMessageDialog(this, "File ko được trống", "Lỗi!", JOptionPane.ERROR_MESSAGE);
-            return;
+    private void miSaveGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveGraphActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text file", "txt"));
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String filePath = String.valueOf(fileChooser.getSelectedFile()); //str là đường dẫn tới file, ví dụ:  C:\Users\AnhTu\Documents\image for java project\bejeweled3.png.  chú ý dấu \ chứ ko phải /
+            if(!filePath.endsWith(".txt")) filePath += ".txt";
+            gp.saveGraph(filePath);
         }
+    }//GEN-LAST:event_miSaveGraphActionPerformed
 
-        boolean b = gp.readGraphFromFile(filePath);
-        if(b == false) {
-            JOptionPane.showMessageDialog(this, "File ko tồn tại!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    private void miOpenGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miOpenGraphActionPerformed
+        new OpenGraphFrame(this).setVisible(true);
+    }//GEN-LAST:event_miOpenGraphActionPerformed
+
+    private void miRandomGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRandomGraphActionPerformed
+        Random rd = new Random();
+        int n = rd.nextInt(11) + 5;
+        int s = rd.nextInt(n) + 1;
+        int t = rd.nextInt(n) + 1;
+        
+        gp.randomGraph(n, s, t);     //ngẫu nhiên từ 5 - 15 node
         gp.repaint();
         setComboBoxData();
         setEnabledComponents(true);
-        cbSourceNode.setSelectedIndex(gp.getSourceNode() - 1);
-        cbDestNode.setSelectedIndex(gp.getDestNode());      //Do cbDestNode có phần tử đầu tiên là "Tất cả"
-    }//GEN-LAST:event_btOpenGraphActionPerformed
+    }//GEN-LAST:event_miRandomGraphActionPerformed
 
-    private void btChooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btChooseFileActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text file", "txt"));
-        int result = fileChooser.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String filePath = String.valueOf(fileChooser.getSelectedFile()); //str là đường dẫn tới file, ví dụ:  C:\Users\AnhTu\Documents\image for java project\bejeweled3.png.  chú ý dấu \ chứ ko phải /
-            txtFilePath.setText(filePath);
-        }
-    }//GEN-LAST:event_btChooseFileActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        JOptionPane.showMessageDialog(this, new MessageWithLink("This app was created by ATT. Visit <a style=\"text-decoration: none; color: blue;\" href=\"https://github.com/AnhtuTa/NetbeansProjects/tree/master/ShortestPathRouting\">my Github</a> to download source code"), "About", JOptionPane.INFORMATION_MESSAGE);
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void setComboBoxData() {
+    private void btClearOutput1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btClearOutput1ActionPerformed
+        gp.repaint();
+    }//GEN-LAST:event_btClearOutput1ActionPerformed
+
+    public void setComboBoxData() {
         int nodeQuantities = gp.nodeQuantity;
         
         String [] str = new String [nodeQuantities];
@@ -524,17 +487,29 @@ public class App extends javax.swing.JFrame {
         }
         cbSourceNode.setModel(new DefaultComboBoxModel<>(str));
         cbDestNode.setModel(new DefaultComboBoxModel<>(str2));
+        cbSourceNode.setSelectedIndex(gp.getSourceNode() - 1);
+        cbDestNode.setSelectedIndex(gp.getDestNode());      //Do cbDestNode có phần tử đầu tiên là "Tất cả"
     }
     
-    private void setEnabledComponents(boolean b) {
+    public void setEnabledComponents(boolean b) {
         cbSourceNode.setEnabled(b);
         cbDestNode.setEnabled(b);
         btRun.setEnabled(b);
         btRunStep.setEnabled(b);
         btTraversal.setEnabled(b);
         btTraversalStep.setEnabled(b);
-        btSaveGraph.setEnabled(b);
+        miSaveGraph.setEnabled(b);
     }
+
+    public JComboBox<String> getCbDestNode() {
+        return cbDestNode;
+    }
+
+    public JComboBox<String> getCbSourceNode() {
+        return cbSourceNode;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -554,14 +529,10 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btChooseFile;
     private javax.swing.JButton btClearOutput;
-    private javax.swing.JButton btHelp;
-    private javax.swing.JButton btOpenGraph;
-    private javax.swing.JButton btRandomGraph;
+    private javax.swing.JButton btClearOutput1;
     private javax.swing.JButton btRun;
     private javax.swing.JButton btRunStep;
-    private javax.swing.JButton btSaveGraph;
     private javax.swing.JButton btTraversal;
     private javax.swing.JButton btTraversalStep;
     private javax.swing.JComboBox<String> cbDestNode;
@@ -574,16 +545,21 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JMenuItem miOpenGraph;
+    private javax.swing.JMenuItem miRandomGraph;
+    private javax.swing.JMenuItem miSaveGraph;
     private javax.swing.JPanel optionPanel;
     private javax.swing.JPanel outputPanel;
     private javax.swing.JTextArea taOutput;
-    private javax.swing.JTextField txtFilePath;
     // End of variables declaration//GEN-END:variables
 }
