@@ -27,7 +27,7 @@ public class Dijkstra {
     private Set<Integer> T; //Dùng cái này để lưu tập các node để sử dụng trong thuật toán. Ban đầu T = V, sau mỗi bước T = T\{u}. Khi T rỗng thì xong thuật toán!
     private int[][] w;  //ma trận trọng số của đồ thị
     public int[] p;    //p[k] = parent of k on the shortest path
-    public int []steps;    //steps là thứ tự duyệt node (ko tính node nguồn). Chú ý rằng: nếu có n node thì chỉ cần n step là duyệt xong
+    public int []steps;    //steps là thứ tự duyệt node (ko tính node nguồn). Chú ý rằng: nếu có n node thì chỉ cần n-1 step là duyệt xong
     public int len;     //Độ dài DDNN, áp dụng cho t != 0
     public static final int INF = 99999999;
     String [] names = {"", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"};    //có thể dùng tên để hiển thị node thay cho index
@@ -43,7 +43,7 @@ public class Dijkstra {
         d = new int[n+1];
         p = new int[n+1];
         T = new HashSet<>();
-        steps = new int[n];
+        steps = new int[n+1];
         
         init();
     }
@@ -97,7 +97,7 @@ public class Dijkstra {
             d = new int[n+1];
             p = new int[n+1];
             T = new HashSet<>();
-            steps = new int[n];
+            steps = new int[n+1];
             w = new int[n+1][n+1];
             
             for (int i = 1; i <= n; i++) {

@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -88,14 +89,6 @@ public final class GraphPanel extends JPanel {
     public void setDestNode(int t) {
         this.t = t;
     }
-    
-//    private void showNodeInfo(int mouseX, int mouseY) {
-//        for (int i = 1; i <= nodeQuantity; i++) {
-//            if(mouseX < nodes[i].x + 10 && mouseX > nodes[i].x - 10 && mouseY < nodes[i].y + 10 && mouseY > nodes[i].y - 10) {
-//                JOptionPane.showMessageDialog(this, "Node "+nodes[i].getIndex() + ", coordinate: (" + nodes[i].getX() + ", " + nodes[i].getY() + ")\n" + "Neighbors: " + nodes[i].getNeighborsName());
-//            }
-//        }
-//    }
     
     public void randomGraph(int n, int sourceNode, int destNode) {
         nodeQuantity = n;
@@ -257,24 +250,18 @@ public final class GraphPanel extends JPanel {
         ds = new Dijkstra(nodeQuantity, s, t, w);
         ds.dijsktra();
         
-        // Vẽ đường đi thăm các node và in kq
-        taOut.append("Thứ tự thăm các node\n");
-        for (int i = 1; i < nodeQuantity; i++) {
-            int u = ds.steps[i];
-            if(u == 0) break;
-            int u_parent = ds.getP()[u];
-            draw2Nodes(g2, u_parent, u);
-        }
         
         // Vẽ đường đi từ node nguồn tới đích, nếu t != 0
         if(t != 0) {
-            int currNode = t;   //t phải khác 0, nghĩa là phải có 1 node đích cụ thể, chứ ko phải tất cả các node
-            len = 0;
-            g2.setColor(Color.blue);
-            while(currNode != s) {
-                len += w[currNode][ds.p[currNode]];
-                draw2Nodes(g2, Color.GREEN, ds.p[currNode], currNode);
-                currNode = ds.p[currNode];
+            drawPath(g2);
+        } else {
+            // Vẽ đường đi từ node nguồn tới tất cả các node khác, nếu t == 0
+            taOut.append("Thứ tự thăm các node\n");
+            for (int i = 1; i < nodeQuantity; i++) {
+                int u = ds.steps[i];
+                if(u == 0) break;
+                int u_parent = ds.getP()[u];
+                draw2Nodes(g2, u_parent, u);
             }
         }
 
@@ -295,10 +282,10 @@ public final class GraphPanel extends JPanel {
             taOut.append("Thứ tự thăm các node\n");
             step = 1;
         }
-        
+
         int u = ds.steps[step];
-        if(u == 0) {    //trường hợp này xảy ra khi ta tìm DDNN tới 1 nút chứ ko phải tất cả các nút
-            System.out.println("u == 0, done!");
+        if(u == 0 || step == nodeQuantity) {
+            if(t != 0) drawPath(g2);
             doneDijkstra();
             return;
         }
@@ -306,10 +293,25 @@ public final class GraphPanel extends JPanel {
         int u_parent = ds.getP()[u];
         draw2Nodes(g2, u_parent, u);
         step++;
-        if(step == nodeQuantity) {      //sau n-1 bước là duyệt xong
-            doneDijkstra();
+    }
+    
+    private void drawPath(Graphics2D g2) {
+        taOut.append("Đường đi tới node đích\n");
+        Stack<Integer> stack = new Stack<>();
+        int currNode = t;   //t phải khác 0, nghĩa là phải có 1 node đích cụ thể, chứ ko phải tất cả các node
+        len = 0;
+        g2.setColor(Color.blue);
+        while(currNode != s) {
+            stack.push(currNode);
+            len += w[currNode][ds.p[currNode]];
+            currNode = ds.p[currNode];
         }
-        
+
+        // vẽ các node trong stack
+        while(!stack.isEmpty()) {
+            int u = stack.pop();
+            draw2Nodes(g2, Color.GREEN, ds.p[u], u);
+        }
     }
     
     public void paintPrim() {
@@ -348,10 +350,9 @@ public final class GraphPanel extends JPanel {
         int near_u = pr.near[u];
         draw2Nodes(g2, near_u, u);      //vẽ theo chiều thừ near_u -> u, nhưng hiện tại mới chỉ code đc vẽ ko có chiều
         step++;
-        if(step == (nodeQuantity)) {      //sau n-1 bước là duyệt xong
+        if(step == nodeQuantity) {      //sau n-1 bước là duyệt xong
             donePrim();
         }
-        
     }
     
     // vẽ đường thẳng nối từ u_parent tới u
@@ -374,6 +375,13 @@ public final class GraphPanel extends JPanel {
         taOut.setCaretPosition(taOut.getDocument().getLength());
     }
     
+    /**
+     * vẽ đường thẳng nối từ u_parent tới u, với màu vẽ đường thẳng là c
+     * @param g2 graphic của component để vẽ
+     * @param c màu để vẽ đường thẳng nối 2 node u_parent -> u
+     * @param u_parent node nguồn
+     * @param u node đích
+     */
     private void draw2Nodes(Graphics g2, Color c, int u_parent, int u) {
         g2.setFont(new java.awt.Font("Tahoma", 1, 11));
         g2.setColor(c);
@@ -397,6 +405,7 @@ public final class GraphPanel extends JPanel {
         step = 1;
         isRunningStep = false;
         taOut.append("done!\n");
+        if(t != 0) taOut.append("Độ dài đường đi ngắn nhất từ " + s + " tới " + t + " là: " + len + "\n");
         taOut.setCaretPosition(taOut.getDocument().getLength());
     }
     
@@ -486,3 +495,7 @@ public final class GraphPanel extends JPanel {
         }
     }
 }
+
+/*
+C:\Users\AnhTu\Documents\graph_nguyenvanquan.txt
+*/
