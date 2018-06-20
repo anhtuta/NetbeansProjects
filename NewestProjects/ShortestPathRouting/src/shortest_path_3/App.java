@@ -551,6 +551,8 @@ public class App extends javax.swing.JFrame {
     private void miSaveGraphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveGraphActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text file", "txt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("pdf file", "pdf"));
+        
         int result = fileChooser.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             String filePath = String.valueOf(fileChooser.getSelectedFile()); //str là đường dẫn tới file, ví dụ:  C:\Users\AnhTu\Documents\image for java project\bejeweled3.png.  chú ý dấu \ chứ ko phải /

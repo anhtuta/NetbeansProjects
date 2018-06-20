@@ -80,5 +80,6 @@ public class Node {
         g.setColor(Color.BLACK);
         g.setFont(new java.awt.Font("Tahoma", 1, 16));
         g.drawString(index+"", x, y);
+        g.drawOval(x-RADIUS+4, y-RADIUS-4, RADIUS*2, RADIUS*2);
     }
 }

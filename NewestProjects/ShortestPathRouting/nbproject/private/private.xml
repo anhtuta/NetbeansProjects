@@ -26,9 +26,10 @@
         </group>
         <group name="NewestProjects">
             <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/shortest_path_3/dijkstra_GraphDemo.png</file>
+            <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/shortest_path_3/Node.java</file>
             <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/shortest_path_3/GraphPanel.java</file>
+            <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/algorithms/Prim.java</file>
             <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/algorithms/Dijkstra.java</file>
-            <file>file:/D:/Documents/NetbeansProjects/NewestProjects/ShortestPathRouting/src/shortest_path_3/App.java</file>
         </group>
     </open-files>
 </project-private>

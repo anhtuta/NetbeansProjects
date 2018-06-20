@@ -55,6 +55,7 @@ public final class GraphPanel extends JPanel {
         isRunningStep = false;
         this.setSize(400, 400);
         setBorder(new LineBorder(Color.GREEN, 2));
+        //setBackground(new java.awt.Color(0, 153, 255));
         
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -282,6 +283,8 @@ public final class GraphPanel extends JPanel {
             taOut.append("Thứ tự thăm các node\n");
             step = 1;
         }
+        
+        System.out.println("step = " + step + ", steps["+step+"] = " + ds.steps[step]);
 
         int u = ds.steps[step];
         if(u == 0 || step == nodeQuantity) {
