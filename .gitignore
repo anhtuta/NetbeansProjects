@@ -1,2 +1,37 @@
-*/build/
-*.class
+/.metadata/
+/.recommenders/
+/RemoteSystemsTempFiles/
+/Servers/
+**/target/
+**/test/
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+**/.springBeans
+**/.sts4-cache
+**/bin/
+**/target/
+**/.gradle/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+**/nbproject/private/
+**/build/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+
+**/.mvn
