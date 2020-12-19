@@ -9,4 +9,10 @@ Here is a guide how to restore the database:
 - now paste the code from the chat_db.sql file and run it!
 - done!
 
+===
+How to run:
+- You should open this project using Netbeans IDE (not Eclipse)
+- Firstly run server: ServerFrame.java
+- Then run ClientFrame.java. Each user will run one ClientFrame
+- Login and see how it work!
 Thank you!
