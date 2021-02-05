@@ -4,5 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="NetBeansProjects"/>
         <group name="NetbeansProjects"/>
+        <group>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/RoomPanel.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/server/User.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/server/ServerFrame.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/server/UserDatabase.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/ClientPanel.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/PrivateChat.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/SignUpPanel.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/LoginPanel.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/controller/ClientFrame.java</file>
+            <file>file:/D:/Documents/Java/NetbeansProjects/ChatSocket4/src/view/WelcomePanel.java</file>
+        </group>
     </open-files>
 </project-private>
