@@ -3,7 +3,7 @@ package sorting;
 public interface SortAlgorithm {
 
     public void sort(int[] arr);
-    
+
     public String getSortName();
 
     public default void swap(int[] arr, int x, int y) {

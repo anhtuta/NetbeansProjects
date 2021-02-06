@@ -19,7 +19,7 @@ public class QuickSort implements SortAlgorithm {
         // lỗi StackOverFlow, do có nhiều duplicate: https://stackoverflow.com/a/33887098/7688028.
         // Còn nữa, với pivot là đầu/cuối, và dãy đã được sắp xếp, thì thời gian sắp xếp
         // lâu hơn rất nhiều mergesort/quicksort (có khi gấp 10 lần) (Đã test thử với n = 10000)
-        swap(arr, (L + R) / 2, R);
+//        swap(arr, (L + R) / 2, R);
 
         int pivot = arr[R];
         int i = (L - 1); // index of smaller element
